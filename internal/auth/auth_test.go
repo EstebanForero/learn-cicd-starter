@@ -14,7 +14,7 @@ func TestGetApiKey(t *testing.T) {
 		t.Error("Error should not be nil, since the headers don't include the Authorization")
 	}
 
-	testHeader.Add("Authorization", "ApiKey99999")
+	testHeader.Set("Authorization", "ApiKey99999")
 
 	_, err = GetAPIKey(testHeader)
 
@@ -24,21 +24,21 @@ func TestGetApiKey(t *testing.T) {
 
 	_, err = GetAPIKey(testHeader)
 
-	testHeader.Add("Authorization", "ApiKey99999 999")
+	testHeader.Set("Authorization", "ApiKey99999 999")
 
 	if (err == nil) {
 		t.Error("Error should not be nil, since the header is malformed")
 	}
+
+	testHeader.Set("Authorization", "ApiKey 999")
 
 	key, err := GetAPIKey(testHeader)
 
-	testHeader.Add("Authorization", "ApiKey 999")
-
 	if (err != nil) {
-		t.Error("Error in valid header")
+		t.Errorf("Error: %v in valid header, %v",err ,testHeader)
 	}
 
-	if (key != "999") {
+	if (key != "9999") {
 		t.Errorf("Invalid key, key should be 999 but is %v", key);
 	}
 }
