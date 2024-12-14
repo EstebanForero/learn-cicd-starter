@@ -35,4 +35,3 @@ jobs:
 
       - name: Check styles
         run: test -z $(go fmt ./...)
-      - 
