@@ -38,7 +38,7 @@ func TestGetApiKey(t *testing.T) {
 		t.Errorf("Error: %v in valid header, %v",err ,testHeader)
 	}
 
-	if (key != "9999") {
+	if (key != "999") {
 		t.Errorf("Invalid key, key should be 999 but is %v", key);
 	}
 }
