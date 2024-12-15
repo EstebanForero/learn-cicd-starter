@@ -8,12 +8,10 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/bootdotdev/learn-cicd-starter/internal/database"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/cors"
 	"github.com/joho/godotenv"
-
-	"github.com/bootdotdev/learn-cicd-starter/internal/database"
-
 	_ "github.com/tursodatabase/libsql-client-go/libsql"
 )
 
@@ -67,11 +65,13 @@ func main() {
 	router.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		f, err := staticFiles.Open("static/index.html")
 		if err != nil {
+			log.Println("Error opeing the static files")
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
 		defer f.Close()
 		if _, err := io.Copy(w, f); err != nil {
+			log.Println("Error copying the values in the file to the response writer")
 			http.Error(w, err.Error(), http.StatusInternalServerError)
 		}
 	})
@@ -89,8 +89,9 @@ func main() {
 
 	router.Mount("/v1", v1Router)
 	srv := &http.Server{
-		Addr:    ":" + port,
-		Handler: router,
+		Addr:              ":" + port,
+		Handler:           router,
+		ReadHeaderTimeout: 3000,
 	}
 
 	log.Printf("Serving on port: %s\n", port)
