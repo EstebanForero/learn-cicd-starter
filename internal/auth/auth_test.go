@@ -42,10 +42,3 @@ func TestGetApiKey(t *testing.T) {
 		t.Errorf("Invalid key, key should be 999 but is %v", key)
 	}
 }
-
-type Juan struct {
-	sussy_baka   string
-	age          uint
-	macaco_level uint
-	name         string
-}
